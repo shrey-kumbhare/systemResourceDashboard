@@ -1,43 +1,62 @@
-# main.py
 from fastapi import FastAPI
+from datetime import datetime
 import psutil
 import platform
 import requests
+import GPUtil
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-@app.get("/system-info")
-def get_system_info():
-    # Get current time
-    current_time = psutil.boot_time()
+# middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"], 
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-    # Get Python version
-    python_version = platform.python_version()
+# time
+@app.get("/time")
+def get_time():
+    return {"current_time": datetime.now().isoformat()}
 
-    # Get battery status
-    battery_status = psutil.sensors_battery()
+# version
+@app.get("/python-version")
+def get_python_version():
+    return {"python_version": platform.python_version()}
 
-    # Get CPU temperature and usage
-    cpu_temperature = psutil.sensors_temperatures()
-    cpu_usage = psutil.cpu_percent()
+# battery
+@app.get("/battery-status")
+def get_battery_status():
+    battery = psutil.sensors_battery()
+    return {"battery_percent": battery.percent, "plugged": battery.power_plugged}
 
-    # Get RAM usage
-    ram_usage = psutil.virtual_memory().percent
-
-    # Get GPU usage (Note: This requires a separate library like GPUtil)
-    # gpu_usage = GPUtil.getGPUs()[0].load * 100
-
-    # Get approximate location based on IP address
-    ip_address = requests.get('https://api.ipify.org').text
-    location_response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
-    location = location_response['city'] + ', ' + location_response['region']
-
+# ram
+@app.get("/cpu-ram-usage")
+def get_cpu_ram_usage():
     return {
-        "current_time": current_time,
-        "python_version": python_version,
-        "battery_status": battery_status,
-        "cpu_temperature": cpu_temperature,
-        "cpu_usage": cpu_usage,
-        "ram_usage": ram_usage,
-        "location": location
+        "cpu_percent": psutil.cpu_percent(interval=1),
+        "ram_usage": psutil.virtual_memory().percent,
     }
+
+# temp
+@app.get("/cpu-temp")
+def get_cpu_temp():
+    try:
+        temp = psutil.sensors_temperatures().get("coretemp", [])
+        return {"cpu_temp": temp[0].current if temp else None}
+    except AttributeError: 
+        return {"cpu_temp": "N/A"}   
+
+# gpu
+@app.get("/gpu-usage")
+def get_gpu_usage():
+    gpus = GPUtil.getGPUs()
+    return [{"gpu": gpu.name, "load": gpu.load * 100} for gpu in gpus]
+
+# location
+@app.get("/location")
+def get_location():
+    response = requests.get("https://ipinfo.io")
+    return response.json()
