@@ -64,5 +64,9 @@ def get_gpu_usage():
 # location
 @app.get("/location")
 def get_location():
-    response = requests.get("https://ipinfo.io")
-    return response.json()
+    try:
+        response = requests.get("https://ipinfo.io")
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        return {"error": "Failed to fetch location", "details": str(e)}

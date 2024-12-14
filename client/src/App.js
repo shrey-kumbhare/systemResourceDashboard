@@ -16,7 +16,7 @@ const App = () => {
       <BatteryStatus />
       <CpuRamUsage />
       <GpuUsage />
-      <Location />
+      {/* <Location /> */}
     </div>
   );
 };
