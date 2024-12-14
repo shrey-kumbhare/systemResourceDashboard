@@ -7,7 +7,9 @@ const Time = () => {
   useEffect(() => {
     const fetchTime = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/time");
+        const response = await axios.get(
+          "https://systemresourcedashboard.onrender.com/time"
+        );
         setTime(response.data.current_time);
       } catch (error) {
         console.error("Error fetching time:", error);

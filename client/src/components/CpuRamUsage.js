@@ -10,7 +10,9 @@ const CpuRamUsage = () => {
     const fetchCpuRamUsage = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get("http://127.0.0.1:8000/cpu-ram-usage");
+        const response = await axios.get(
+          "https://systemresourcedashboard.onrender.com/cpu-ram-usage"
+        );
         setCpuRamUsage(response.data);
       } catch (error) {
         console.error("Error fetching CPU & RAM usage:", error);

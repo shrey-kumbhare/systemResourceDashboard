@@ -8,7 +8,7 @@ const PythonVersion = () => {
     const fetchPythonVersion = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/python-version"
+          "https://systemresourcedashboard.onrender.com/python-version"
         );
         setPythonVersion(response.data.python_version);
       } catch (error) {

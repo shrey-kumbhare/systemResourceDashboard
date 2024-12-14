@@ -8,7 +8,9 @@ const Location = () => {
   useEffect(() => {
     const fetchLocation = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/location");
+        const response = await axios.get(
+          "https://systemresourcedashboard.onrender.com/location"
+        );
         setLocation(response.data);
       } catch (error) {
         console.error("Error fetching location:", error);

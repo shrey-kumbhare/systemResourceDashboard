@@ -10,7 +10,9 @@ const GpuUsage = () => {
     const fetchGpuUsage = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get("http://127.0.0.1:8000/gpu-usage");
+        const response = await axios.get(
+          "https://systemresourcedashboard.onrender.com/gpu-usage"
+        );
         setGpuUsage(response.data);
         setIsLoading(false);
       } catch (error) {
