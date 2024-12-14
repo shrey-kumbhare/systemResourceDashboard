@@ -5,6 +5,11 @@
   # Command to install dependencies and run the build script
   command = "npm install && npm run build"
 
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
+  
 [context.production.environment]
   # Add environment variables (if any)
   NODE_ENV = "production"
