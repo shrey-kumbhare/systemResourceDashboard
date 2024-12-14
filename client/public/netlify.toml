@@ -1,0 +1,17 @@
+[build]
+  # The directory to deploy
+  publish = "client/build"
+
+  # Command to install dependencies and run the build script
+  command = "npm install && npm run build"
+
+[context.production.environment]
+  # Add environment variables (if any)
+  NODE_ENV = "production"
+
+[build.environment]
+  # Set the Node.js version for the build environment
+  NODE_VERSION = "16"
+
+[[plugins]]
+  package = "@netlify/plugin-functions-installation"
