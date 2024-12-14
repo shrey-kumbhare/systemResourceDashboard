@@ -5,13 +5,19 @@ import platform
 import requests
 import GPUtil
 from fastapi.middleware.cors import CORSMiddleware
+import os
+from dotenv import load_dotenv 
+
+load_dotenv()
 
 app = FastAPI()
+
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 
 # middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"], 
+    allow_origins=allowed_origins, 
     allow_methods=["*"],
     allow_headers=["*"],
 )
