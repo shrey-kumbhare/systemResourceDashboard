@@ -17,9 +17,16 @@ const Time = () => {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <h2>Current Time</h2>
-      {time ? <p>{time}</p> : <p>Loading...</p>}
+      {time ? (
+        <p>
+          Date: {new Date(time).toLocaleDateString()} <br />
+          Time: {new Date(time).toLocaleTimeString()}
+        </p>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };

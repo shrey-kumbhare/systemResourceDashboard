@@ -19,7 +19,7 @@ const BatteryStatus = () => {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <h2>Battery Status</h2>
       {batteryStatus ? (
         <p>

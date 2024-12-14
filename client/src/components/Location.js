@@ -17,7 +17,7 @@ const Location = () => {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <h2>Location</h2>
       {location ? (
         <p>

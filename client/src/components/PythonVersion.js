@@ -19,7 +19,7 @@ const PythonVersion = () => {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <h2>Python Version</h2>
       {pythonVersion ? <p>{pythonVersion}</p> : <p>Loading...</p>}
     </div>

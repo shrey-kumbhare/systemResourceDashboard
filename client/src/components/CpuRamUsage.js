@@ -17,7 +17,7 @@ const CpuRamUsage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <h2>CPU & RAM Usage</h2>
       {cpuRamUsage ? (
         <p>

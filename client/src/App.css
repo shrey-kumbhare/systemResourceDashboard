@@ -1,3 +1,30 @@
+body {
+  background-color: black;
+}
+h1,
+h2,
+h3 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+p,
+li,
+span {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  color: #555;
+}
+
+code,
+pre {
+  font-family: "Fira Code", monospace;
+  color: #dcdcdc;
+}
+
 h1 {
   text-align: center;
   font-size: 2.5rem;
@@ -8,10 +35,9 @@ div {
   margin: 20px auto;
   padding: 10px;
   width: 80%;
-  max-width: 600px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f4f4f4;
+  background-color: #8db3c0;
 }
 
 h2 {
@@ -22,4 +48,7 @@ h2 {
 p {
   font-size: 1rem;
   color: #555;
+}
+.content {
+  background-color: #ceeaea;
 }

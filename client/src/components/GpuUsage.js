@@ -17,7 +17,7 @@ const GpuUsage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <h2>GPU Usage</h2>
       {gpuUsage ? (
         gpuUsage.map((gpu, index) => (
