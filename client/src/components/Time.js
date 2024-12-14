@@ -14,6 +14,8 @@ const Time = () => {
       }
     };
     fetchTime();
+    const intervalId = setInterval(fetchTime, 5000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

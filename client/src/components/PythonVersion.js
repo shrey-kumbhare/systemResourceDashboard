@@ -16,6 +16,8 @@ const PythonVersion = () => {
       }
     };
     fetchPythonVersion();
+    const intervalId = setInterval(fetchPythonVersion, 5000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
