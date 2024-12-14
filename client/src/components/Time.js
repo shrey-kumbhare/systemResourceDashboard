@@ -8,7 +8,7 @@ const Time = () => {
     const fetchTime = async () => {
       try {
         const response = await axios.get(
-          "https://systemresourcedashboard.onrender.com/time"
+          "https://systemresourcedashboard-1.onrender.com/time"
         );
         setTime(response.data.current_time);
       } catch (error) {

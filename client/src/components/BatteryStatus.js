@@ -11,7 +11,7 @@ const BatteryStatus = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          "https://systemresourcedashboard.onrender.com/battery-status"
+          "https://systemresourcedashboard-1.onrender.com/battery-status"
         );
         setBatteryStatus(response.data);
       } catch (error) {

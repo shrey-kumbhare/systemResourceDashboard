@@ -11,7 +11,7 @@ const GpuUsage = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          "https://systemresourcedashboard.onrender.com/gpu-usage"
+          "https://systemresourcedashboard-1.onrender.com/gpu-usage"
         );
         setGpuUsage(response.data);
         setIsLoading(false);

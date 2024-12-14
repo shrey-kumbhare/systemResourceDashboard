@@ -11,7 +11,7 @@ const CpuRamUsage = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          "https://systemresourcedashboard.onrender.com/cpu-ram-usage"
+          "https://systemresourcedashboard-1.onrender.com/cpu-ram-usage"
         );
         setCpuRamUsage(response.data);
       } catch (error) {

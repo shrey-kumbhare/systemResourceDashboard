@@ -9,7 +9,7 @@ const Location = () => {
     const fetchLocation = async () => {
       try {
         const response = await axios.get(
-          "https://systemresourcedashboard.onrender.com/location"
+          "https://systemresourcedashboard-1.onrender.com/location"
         );
         setLocation(response.data);
       } catch (error) {
