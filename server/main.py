@@ -7,6 +7,7 @@ import GPUtil
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv 
+from fastapi.responses import JSONResponse
 
 load_dotenv()
 
@@ -53,13 +54,25 @@ def get_cpu_temp():
         temp = psutil.sensors_temperatures().get("coretemp", [])
         return {"cpu_temp": temp[0].current if temp else None}
     except AttributeError: 
-        return {"cpu_temp": "N/A"}   
+        return {"cpu_temp": "N/A"}    
 
-# gpu
 @app.get("/gpu-usage")
 def get_gpu_usage():
-    gpus = GPUtil.getGPUs()
-    return [{"gpu": gpu.name, "load": gpu.load * 100} for gpu in gpus]
+    try: 
+        gpus = GPUtil.getGPUs() 
+        if not gpus:
+            return JSONResponse(
+                content={"message": "No GPUs available on the server."},
+                status_code=200
+            ) 
+        return [{"gpu": gpu.name, "load": gpu.load * 100} for gpu in gpus]
+
+    except Exception as e: 
+        return JSONResponse(
+            content={"error": f"An error occurred while fetching GPU data: {str(e)}"},
+            status_code=500
+        )
+
 
 # location
 @app.get("/location")
