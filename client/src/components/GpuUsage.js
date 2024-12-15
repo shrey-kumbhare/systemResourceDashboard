@@ -14,17 +14,19 @@ const GpuUsage = () => {
           "https://systemresourcedashboard-1.onrender.com/gpu-usage"
         );
         setGpuUsage(response.data);
-        setIsLoading(false);
+        setError(null);
       } catch (error) {
         console.error("Error fetching GPU usage:", error);
-        setError("Failed to fetch GPU usage.");
-        setIsLoading(false);
+        setError(
+          "Failed to fetch GPU usage. Ensure the backend is running and accessible."
+        );
       }
+      setIsLoading(false);
     };
 
     fetchGpuUsage();
-    const intervalId = setInterval(fetchGpuUsage, 5000);
-    return () => clearInterval(intervalId);
+    const intervalId = setInterval(fetchGpuUsage, 5000); // Update every 5 seconds
+    return () => clearInterval(intervalId); // Cleanup
   }, []);
 
   return (
@@ -34,12 +36,14 @@ const GpuUsage = () => {
         <p>Loading...</p>
       ) : error ? (
         <p>{error}</p>
-      ) : (
+      ) : gpuUsage && gpuUsage.length > 0 ? (
         gpuUsage.map((gpu, index) => (
           <p key={index}>
-            {gpu.gpu}: {gpu.load}% Usage
+            {gpu.gpu}: {gpu.load.toFixed(2)}% Usage
           </p>
         ))
+      ) : (
+        <p>No GPU usage data available.</p>
       )}
     </div>
   );
