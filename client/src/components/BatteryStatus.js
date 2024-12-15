@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 const BatteryStatus = () => {
   const [batteryStatus, setBatteryStatus] = useState(null);
@@ -10,10 +9,29 @@ const BatteryStatus = () => {
     const fetchBatteryStatus = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          "https://systemresourcedashboard-1.onrender.com/battery-status"
-        );
-        setBatteryStatus(response.data);
+        if ("getBattery" in navigator) {
+          const battery = await navigator.getBattery();
+          setBatteryStatus({
+            battery_percent: Math.round(battery.level * 100),
+            plugged: battery.charging,
+          });
+
+          // Add event listeners to update battery info dynamically
+          battery.addEventListener("levelchange", () =>
+            setBatteryStatus((prev) => ({
+              ...prev,
+              battery_percent: Math.round(battery.level * 100),
+            }))
+          );
+          battery.addEventListener("chargingchange", () =>
+            setBatteryStatus((prev) => ({
+              ...prev,
+              plugged: battery.charging,
+            }))
+          );
+        } else {
+          setError("Battery API is not supported in this browser.");
+        }
       } catch (error) {
         console.error("Error fetching battery status:", error);
         setError("Failed to fetch battery status.");
@@ -22,8 +40,6 @@ const BatteryStatus = () => {
     };
 
     fetchBatteryStatus();
-    const intervalId = setInterval(fetchBatteryStatus, 5000);
-    return () => clearInterval(intervalId);
   }, []);
 
   return (
